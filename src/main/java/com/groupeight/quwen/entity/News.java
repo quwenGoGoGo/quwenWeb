@@ -10,8 +10,10 @@ public class News {
     @GeneratedValue
     private Long newsID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false, fetch = FetchType.LAZY)
+    //可选属性optional=false,表示分类不能为空。删除新闻，不影响分类
     @JoinColumn(name="cate_id")
+    //设置在category表中的关联字段(外键)
     private Category category;
 
     private String title;

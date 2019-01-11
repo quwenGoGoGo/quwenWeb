@@ -13,6 +13,8 @@ public class Category {
     private Integer sort;
 
     @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,orphanRemoval = true)
+    //cascade级联保存、更新、删除、刷新;延迟加载。当删除分类时，会级联删除该分类的所有新闻
+    //拥有mappedBy注解的实体类为关系被维护端
     private List<News> news;
 
     public Long getCateID() {
