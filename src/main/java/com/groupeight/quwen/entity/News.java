@@ -24,16 +24,16 @@ public class News {
     private Integer share_count;
     private Integer comment_count;
 
-    @OneToMany(mappedBy = "news",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Collect> collects;
-
-    public List<Collect> getCollects() {
-        return collects;
-    }
-
-    public void setCollects(List<Collect> collects) {
-        this.collects = collects;
-    }
+//    @OneToMany(mappedBy = "news",cascade = CascadeType.ALL,orphanRemoval = true)
+//    private List<Collect> collects;
+//
+//    public List<Collect> getCollects() {
+//        return collects;
+//    }
+//
+//    public void setCollects(List<Collect> collects) {
+//        this.collects = collects;
+//    }
 
     @OneToMany(mappedBy = "news",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Comment> comments;
