@@ -1,6 +1,14 @@
 package com.groupeight.quwen.entity;
 
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Comment {
+    @Id
+    @GeneratedValue
     private Integer commentID;
     private String UserID;
     private String commentContent;
