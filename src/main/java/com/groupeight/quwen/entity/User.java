@@ -8,33 +8,33 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long userID;
 
-    @NotBlank(message = "name is mandatory")
     private String name;
 
-    @NotBlank(message = "password is mandatory")
-    private String password;
+    private String sex;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<Collect> collect;
+    private String address;
 
-    public User() {}
+    private String head_icon;
 
-    public User(@NotBlank(message = "name is mandatory") String name,
-                @NotBlank(message = "password is mandatory") String password,
-                List<Collect> collect) {
-        this.name = name;
-        this.password = password;
-        this.collect = collect;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Collect> collects;
+
+    public List<Collect> getCollects() {
+        return collects;
     }
 
-    public long getId() {
-        return id;
+    public void setCollects(List<Collect> collects) {
+        this.collects = collects;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(long userID) {
+        this.userID = userID;
     }
 
     public String getName() {
@@ -45,19 +45,27 @@ public class User {
         this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getSex() {
+        return sex;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
-    public List<Collect> getCollect() {
-        return collect;
+    public String getAddress() {
+        return address;
     }
 
-    public void setCollect(List<Collect> collect) {
-        this.collect = collect;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getHead_icon() {
+        return head_icon;
+    }
+
+    public void setHead_icon(String head_icon) {
+        this.head_icon = head_icon;
     }
 }

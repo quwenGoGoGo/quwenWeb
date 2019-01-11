@@ -1,31 +1,48 @@
 package com.groupeight.quwen.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 public class Collect {
 
     @Id
     @GeneratedValue
-    private Long ID;
+    private Long collectID;
 
-    private java.sql.Date time;
+    private Date time;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "news_id")
+    private News news;
 
     public Collect(Date time) {
         this.time = time;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Long getID() {
-        return ID;
+    public User getUser() {
+        return user;
     }
 
-    public void setID(Long ID) {
-        this.ID = ID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
+    public void setNews(News news) {
+        this.news = news;
+    }
 
+    public Long getCollectID() {
+        return collectID;
+    }
+
+    public void setCollectID(Long collectID) {
+        this.collectID = collectID;
+    }
 
     public Date getTime() {
         return time;
