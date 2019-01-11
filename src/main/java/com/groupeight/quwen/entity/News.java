@@ -23,6 +23,8 @@ public class News {
     private Integer share_count;
     private Integer comment_count;
 
+
+
     public Long getNewsID() {
         return newsID;
     }

@@ -1,9 +1,8 @@
 package com.groupeight.quwen.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Category {
@@ -12,6 +11,9 @@ public class Category {
     private Long cateID;
     private String title;
     private Integer sort;
+
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<News> news;
 
     public Long getCateID() {
         return cateID;
@@ -35,5 +37,13 @@ public class Category {
 
     public void setSort(Integer sort) {
         this.sort = sort;
+    }
+
+    public List<News> getNews() {
+        return news;
+    }
+
+    public void setNews(List<News> news) {
+        this.news = news;
     }
 }
