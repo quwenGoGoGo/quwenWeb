@@ -1,9 +1,7 @@
 package com.groupeight.quwen.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Comment {
@@ -13,6 +11,18 @@ public class Comment {
     private String UserID;
     private String commentContent;
     private String commentDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "news_id")
+    private News news;
+
+    public News getNews() {
+        return news;
+    }
+
+    public void setNews(News news) {
+        this.news = news;
+    }
 
     public Integer getCommentID() {
         return commentID;
