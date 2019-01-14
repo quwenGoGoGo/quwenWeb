@@ -7,7 +7,7 @@ import java.util.Date;
 public class Collect {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long collectID;
 
     private Date time;
