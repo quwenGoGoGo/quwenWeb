@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 public class News {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long newsID;
 
     @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false, fetch = FetchType.LAZY)
@@ -25,6 +25,7 @@ public class News {
     private Integer collect_count;
     private Integer share_count;
     private Integer comment_count;
+    private Integer status;
 
     @OneToMany(mappedBy = "news",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Collect> collects;
@@ -134,5 +135,13 @@ public class News {
 
     public void setComment_count(Integer comment_count) {
         this.comment_count = comment_count;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
