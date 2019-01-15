@@ -19,13 +19,6 @@ public class CategoryController {
     @GetMapping("index")
     public String index(){return "index";}
 
-    @GetMapping("toList")
-    public String getCategoryList(Model model){
-        List<Category> category=categoryService.getAllCategories();
-        model.addAttribute("category",category);
-        return "cate_list";
-    }
-
     @RequestMapping("list")
     public List<Category> getAllCategory(Model model){
         List<Category> categories = categoryService.getAllCategory();
