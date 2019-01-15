@@ -16,8 +16,8 @@ public class Collect {
     @JoinColumn(name = "news_id")
     private News news;
 
-    public News getNews() {
-        return news;
+    public Collect(Date time) {
+        this.time = time;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
