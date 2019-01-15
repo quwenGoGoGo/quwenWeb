@@ -9,7 +9,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cateID;
-    private String title;
+    private String cateName;
     private Integer sort;
 
     @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,orphanRemoval = true)
@@ -25,12 +25,12 @@ public class Category {
         this.cateID = cateID;
     }
 
-    public String getTitle() {
-        return title;
+    public String getCateName() {
+        return cateName;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCateName(String cateName) {
+        this.cateName = cateName;
     }
 
     public Integer getSort() {

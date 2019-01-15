@@ -42,8 +42,8 @@
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加新闻','./news-add.html',600,400)"><i class="layui-icon"></i>添加</button>
-        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+        <button class="layui-btn" th:onclick="x_admin_show('添加用户','/news/toAdd',600,400)"><i class="layui-icon"></i>添加</button>
+          <span class="x-right" style="line-height:40px">共有数据：88 条</span>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -68,7 +68,7 @@
             </td>
             <td th:text="${iterStat.count}">1</td>
             <td th:text="${News.getTitle()}">阿里：马云从未转让和退出淘宝股份也没有这个打算</td>
-            <td th:text="${News.getCategory()}">财经</td>
+            <td th:text="${News.getCategory().getCateName()}">财经</td>
             <td th:text="${News.getCtime()}">2019-01-07 14：30</td>
             <td th:text="${News.getView_count()}">40000</td>
             <td th:text="${News.getCollect_count()}">1028</td>
