@@ -7,5 +7,5 @@ import java.util.List;
 
 @Service
 public interface CategoryService {
-    List<Category> getAllCategory();
+    List<Category> getAllCategories();
 }
