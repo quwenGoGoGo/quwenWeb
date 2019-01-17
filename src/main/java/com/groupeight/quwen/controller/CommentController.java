@@ -22,7 +22,7 @@ public class CommentController {
        return "comment_list";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/toAdd")
     public String toAdd(Model model){
         model.addAttribute("cmts", new Comment());
         return "comment_add";
