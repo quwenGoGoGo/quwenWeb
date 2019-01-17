@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +39,7 @@ public class CategoryController {
             model.addAttribute("isAdd",true);
             model.addAttribute("category",new Category());
         }
+        System.out.println("edit");
         return "cate_edit";
     }
 
@@ -60,8 +62,10 @@ public class CategoryController {
         Category category = new Category();
         category.setCateName((String)map.get("cateName"));
         category.setSort(Integer.parseInt((String)map.get("sort")));
-        if(map.get("id")!=null && (Long)map.get("id")>0){
-            category.setCateID((Long)map.get("id"));
+        String cateID = map.get("cateID").toString();
+        System.out.println("save or edit"+map.get("cateID").toString());
+        if(map.get("cateID")!=null && (Long.parseLong(cateID))>0){
+            category.setCateID(Long.parseLong(cateID));
             categoryService.updateCategory(category);
 
         }else {
@@ -75,5 +79,15 @@ public class CategoryController {
         List<Category> categories = categoryService.getAllCategory();
         model.addAttribute("categoryList",categories);
         return null;
+    }
+
+    @RequestMapping("del")
+    @ResponseBody
+    public String delByID(@RequestParam  HashMap<String,String> map){
+        String cateIDs=map.get("id");
+        Long id = Long.parseLong(cateIDs);
+        System.out.println("cateIDdel:"+id);
+        categoryService.deleteCategory(id);
+        return "success";
     }
 }
