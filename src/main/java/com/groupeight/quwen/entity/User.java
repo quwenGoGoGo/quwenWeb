@@ -1,8 +1,9 @@
 package com.groupeight.quwen.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class User {
@@ -10,25 +11,39 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userID;
 
-    private String name;
+    private String nikeName;
 
-    private String sex;
+    private int gender;
 
-    private String address;
+    private String city;
 
-    private String head_icon;
+    private String avatarUrl;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<Collect> collects;
+    private String openid;
 
-    public List<Collect> getCollects() {
-        return collects;
+    private int firstLogin;
+//    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+//    private List<Collect> collects;
+//
+//    public List<Collect> getCollects() {
+//        return collects;
+//    }
+
+//    public void setCollects(List<Collect> collects) {
+//        this.collects = collects;
+//    }
+    public String getOpenid(){
+        return openid;
     }
-
-    public void setCollects(List<Collect> collects) {
-        this.collects = collects;
+    public void setOpenid(String openid){
+        this.openid = openid;
     }
-
+    public int getFirstLogin(){
+        return firstLogin;
+    }
+    public void setFirstLogin(int firstLogin){
+        this.firstLogin = firstLogin;
+    }
     public long getUserID() {
         return userID;
     }
@@ -38,34 +53,46 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return nikeName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String nikeName) {
+        this.nikeName = nikeName;
     }
 
-    public String getSex() {
-        return sex;
+    public int getGender() {
+        return gender;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
-    public String getAddress() {
-        return address;
+    public String getCity() {
+        return city;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddress(String city) {
+        this.city = city;
     }
 
-    public String getHead_icon() {
-        return head_icon;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setHead_icon(String head_icon) {
-        this.head_icon = head_icon;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "nikeName='" + nikeName + '\'' +
+                ", gender=" + gender +
+                ", city='" + city + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", openid='" + openid + '\'' +
+                ", firstLogin=" + firstLogin +
+                '}';
     }
 }

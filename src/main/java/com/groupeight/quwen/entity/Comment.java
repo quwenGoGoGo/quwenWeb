@@ -8,7 +8,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer commentID;
-    private String UserID;
+    private String userID;
     private String commentContent;
     private String commentDate;
 
@@ -33,11 +33,11 @@ public class Comment {
     }
 
     public String getUserID() {
-        return UserID;
+        return userID;
     }
 
     public void setUserID(String userID) {
-        UserID = userID;
+        this.userID = userID;
     }
 
     public String getCommentContent() {

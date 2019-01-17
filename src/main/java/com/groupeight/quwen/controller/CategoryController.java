@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -41,18 +42,32 @@ public class CategoryController {
     }
 
     @PostMapping("save")
-    public String save(@ModelAttribute Category category){
-        if(category == null){
-            return "fail";
+    @ResponseBody
+    public String save(@RequestParam HashMap<String,Object> map){
+//        if(category == null){
+//            return "fail";
+//        }
+//        System.out.println(category.getCateID());
+//        if(category.getCateID()!=null && category.getCateID()>0){
+//            categoryService.updateCategory(category);
+//
+//        }else {
+//            categoryService.addCategory(category);
+//        }
+        if(map == null || map.size() ==0){
+            return null;
         }
-        System.out.println(category.getCateID());
-        if(category.getCateID()!=null && category.getCateID()>0){
+        Category category = new Category();
+        category.setCateName((String)map.get("cateName"));
+        category.setSort(Integer.parseInt((String)map.get("sort")));
+        if(map.get("id")!=null && (Long)map.get("id")>0){
+            category.setCateID((Long)map.get("id"));
             categoryService.updateCategory(category);
 
         }else {
             categoryService.addCategory(category);
         }
-        return "redirect:/cate/toList";
+        return "success";
     }
 
     @RequestMapping("list")
