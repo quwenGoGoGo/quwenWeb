@@ -8,5 +8,6 @@ import java.util.List;
 @Service
 public interface CategoryService {
     Category findByCateName(String cateName);
+
     List<Category> getAllCategory();
 }
