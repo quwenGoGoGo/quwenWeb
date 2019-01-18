@@ -61,4 +61,10 @@ public class CategoryController {
         model.addAttribute("categoryList",categories);
         return null;
     }
+
+    @RequestMapping("del/{id}")
+    public String delByID(@PathVariable("id")Long cateID){
+        categoryService.deleteCategory(cateID);
+        return "redirect:/cate/toList";
+    }
 }

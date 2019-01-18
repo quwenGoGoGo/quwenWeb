@@ -20,5 +20,4 @@ public interface CategoryService {
 
     Category getCategoryByID(Long cateID);
 
-
 }

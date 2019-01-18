@@ -20,7 +20,7 @@
   <![endif]-->
 </head>
 
-<body>
+<body onload="opener.location.reload()">
 <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
@@ -65,12 +65,13 @@
       <td th:text="${Cate.getSort()}">1</td>
       <td class="td-manage">
         <!--<a title="编辑"  th:onclick="x_admin_show('编辑','/cate/edit/'+${Cate.cateID})" href="javascript:;">-->
-          <a th:href="@{'./edit/'+${Cate.cateID}}">
+          <a _href="javascript :history.back()" th:href="@{'./edit/'+${Cate.cateID}}">
 
           <!--<a _href="/news/toList" th:_href="@{'cate/edit/'+${Cate.cateID}}">-->
           <i class="layui-icon">&#xe642;</i>
         </a>
-        <a title="删除" th:onclick="member_del(this,'要删除的id') "href="javascript:;">
+        <!--<a title="删除" th:onclick="member_del(this,'要删除的id') "href="javascript:;">-->
+          <a th:href="@{'./del/'+${Cate.cateID}}">
           <i class="layui-icon">&#xe640;</i>
         </a>
       </td>
@@ -89,6 +90,9 @@
   </div>
 
 </div>
+<script language="javascript">
+    window.opener.document.location.reload()
+</script>
 <script>
     layui.use('laydate', function(){
         var laydate = layui.laydate;
@@ -150,7 +154,8 @@
         });
     }
 </script>
-<script>var _hmt = _hmt || []; (function() {
+<script>
+    var _hmt = _hmt || []; (function() {
     var hm = document.createElement("script");
     hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
     var s = document.getElementsByTagName("script")[0];

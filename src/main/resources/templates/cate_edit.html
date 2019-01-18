@@ -55,8 +55,8 @@
         <div class="layui-form-item">
             <!--<label for="L_repass" class="layui-form-label">-->
             <!--</label>-->
-            <input type="submit" value="提交"/>
-
+            <button class="layui-btn" onclick="buttonClick();">提交</button>
+            <!--<a th:href="@{/cate/toList}" class="layui-btn">一个可跳转的按钮</a>-->
             <!--<button  class="layui-btn" lay-filter="add" lay-submit="">-->
                 <!--修改-->
             <!--</button>-->
@@ -100,7 +100,13 @@
 
     });
 </script>
-<script>var _hmt = _hmt || []; (function() {
+<script>
+    function buttonClick() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+        window.parent.location.reload();
+    }
+    var _hmt = _hmt || []; (function() {
     var hm = document.createElement("script");
     hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
     var s = document.getElementsByTagName("script")[0];
