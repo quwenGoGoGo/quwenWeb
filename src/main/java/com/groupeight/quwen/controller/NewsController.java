@@ -6,12 +6,10 @@ import com.groupeight.quwen.entity.NewsForm;
 import com.groupeight.quwen.service.CategoryService;
 import com.groupeight.quwen.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.DateUtils;
 
@@ -50,7 +48,7 @@ public class NewsController {
     }
 
     @PostMapping("add")
-    public String addNews(NewsForm newsForm, @RequestParam("cover")MultipartFile file, HttpServletRequest request) throws Exception{
+    public String addNews(NewsForm newsForm, @RequestParam("cover")MultipartFile file) throws Exception{
         News news = new News();
         System.out.println(newsForm.getCateName());
         System.out.println(newsForm.getStatus());
@@ -74,6 +72,29 @@ public class NewsController {
         news.setAuthor(newsForm.getAuthor());
 
         return null;
+    }
+
+    @RequestMapping("delete")
+    public String deleteNews(Long id){
+        newsService.deleteNews(id);
+        return "redirect:/news/toList";
+    }
+
+    @RequestMapping("search")
+    public String searchForNews(@RequestParam("searchByTitle")String stitle, @RequestParam("searchByCate")String scategory, Model model){
+        System.out.println("搜索");
+//        String stitle = httpServletRequest.getParameter("searchByTitle");
+//        String scategory = httpServletRequest.getParameter("searchByCate");
+        System.out.println(stitle);
+        System.out.println(scategory);
+//        String stime = httpServletRequest.getParameter("searchByTime");
+        Category category = categoryService.findByCateName(scategory);
+        News newsModel = new News();
+        newsModel.setTitle(stitle);
+        newsModel.setCategory(category);
+        List<News> news = newsService.findSearch(newsModel);
+        model.addAttribute("news",news);
+        return "news-list";
     }
 
 

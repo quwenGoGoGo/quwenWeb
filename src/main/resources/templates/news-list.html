@@ -33,11 +33,18 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
-          <input type="text" name="title" class="layui-input" placeholder="新闻标题" autocomplete="off">
-          <input type="text" name="username"  placeholder="新闻分类" autocomplete="off" class="layui-input">
-          <input class="layui-input" placeholder="发布时间" name="end" id="end">
-          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+        <form class="layui-form layui-col-md12 x-so" th:action="@{/news/search}">
+          <input type="text" id="searchByTitle" name="searchByTitle" class="layui-input" placeholder="新闻标题" autocomplete="off">
+          <input type="text" id="searchByCate" name="searchByCate"  placeholder="新闻分类" autocomplete="off" class="layui-input">
+          <!--<label class="layui-form-label">发布时间-->
+          <!--<input class="layui-input" name="searchByTime" id="startTime">- -->
+            <!--<input class="layui-input" name="searchByTime" id="endTime">-->
+          <!--</label>-->
+          <!--<a th:href="@{/news/search}" class="layui-btn">-->
+             <!--<i class="layui-icon">&#xe615;</i>-->
+          <!--</a>-->
+          <input type="submit" class="layui-btn layui-icon" value="">
+          <!--<button class="layui-btn" value="submit" ><i class="layui-icon">&#xe615;</i></button>-->
         </form>
       </div>
       <xblock>
@@ -86,7 +93,7 @@
                 <i class="layui-icon">&#xe642;</i>
               </a>
     
-              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+              <a title="删除" th:href="@{/news/delete(id=${News.getNewsID()})}">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>

@@ -87,79 +87,83 @@
           <div class="layui-form-item">
               <label for="add" class="layui-form-label">
               </label>
+              <a href="@{/news/add}" th:href="@{/news/add}" target="_top">
               <button  id="add" name="add" class="layui-btn" lay-filter="add" lay-submit="">
                   增加
               </button>
+              </a>
           </div>
       </form>
     </div>
     <script>
 
-        // layui.use('upload',function(){
-        //     var $=layui.jquery
-        //         ,upload=layui.upload;
-        //
-        //     //普通图片上传
-        //     var uploadInst=upload.render({
-        //         elem:'#test1'
-        //         ,url:'/addPhoto/'
-        //         ,before:function(obj){
-        //             //预览本地文件示例
-        //             obj,preview(function(index,file,result){
-        //                 $('#demo1').attr('src',result);
-        //             });
-        //         }
-        //         ,done:function(res){
-        //             //如果上传失败
-        //             if(res.code>0){
-        //                 return layer.msg('上传失败');
-        //                 //上传成功
-        //                 layer.msg('上传成功');
-        //             }
-        //         }
-        // });
-        layui.use(['form','layer'], function(){
-            $ = layui.jquery;
-          var form = layui.form
-          ,layer = layui.layer;
-        
-          //自定义验证规则
-          form.verify({
-            nikename: function(value){
-              if(value.length < 5){
-                return '昵称至少得5个字符啊';
-              }
-            }
-            ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-            ,repass: function(value){
-                if($('#L_pass').val()!=$('#L_repass').val()){
-                    return '两次密码不一致';
+        layui.use('upload',function() {
+            var $ = layui.jquery
+                , upload = layui.upload;
+
+            //普通图片上传
+            var uploadInst = upload.render({
+                elem: '#coverbtn'
+                , url: '/news/add'
+                , before: function (obj) {
+                    //预览本地文件示例
+                    obj.preview(function (index, file, result) {
+                        $('#cover').attr('src', result);
+                    });
                 }
-            }
-          });
+                , done: function (res) {
+                    //如果上传失败
+                    if (res.code > 0) {
+                        return layer.msg('上传失败');
+                        //上传成功
+                        layer.msg('上传成功');
+                    }
+                }
+            });
+        });
+        layui.use(['form','layer'], function() {
+            $ = layui.jquery;
+            var form = layui.form
+                , layer = layui.layer;
+
+            //自定义验证规则
+            form.verify({
+                nikename: function (value) {
+                    if (value.length < 5) {
+                        return '昵称至少得5个字符啊';
+                    }
+                }
+                , pass: [/(.+){6,12}$/, '密码必须6到12位']
+                , repass: function (value) {
+                    if ($('#L_pass').val() != $('#L_repass').val()) {
+                        return '两次密码不一致';
+                    }
+                }
+            });
+        });
 
           //监听提交
           form.on('submit(add)', function(data){
               //console.log(data.field)
               //parent.layer.msg("2");
-              var formData = new FormData($("#newsForm")[0]);
-              console.info(formData);
-              //var saveLoading = parent.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
-              $.ajax({
-                  url : '/news/add',
-                  type : 'post',
-                  async: false,
-                  data : formData,
-                  cache:false,
-                  contentType: false,
-                  processData: false,
-                  success : function(data) {
-                      parent.layer.close(saveLoading);
-                      if(data.code==1){
-                          parent.layer.msg("保存成功");
-                      }
-                  }
-              });
+              // var formData = new FormData($("#newsForm")[0]);
+              // console.info(formData);
+              // //var saveLoading = parent.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
+              // $.ajax({
+              //     url : '/news/add',
+              //     type : 'post',
+              //     async: false,
+              //     data : formData,
+              //     cache:false,
+              //     contentType: false,
+              //     processData: false,
+              //     success : function(data) {
+              //         parent.layer.close(saveLoading);
+              //         if(data.code==1){
+              //             parent.layer.msg("保存成功");
+              //         }
+              //     }
+              // });
 
             console.log(data);
 
@@ -171,9 +175,7 @@
             });
             return false;
           });
-          
-          
-        });
+
     </script>
     <script>var _hmt = _hmt || []; (function() {
         var hm = document.createElement("script");
