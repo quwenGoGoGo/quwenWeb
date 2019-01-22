@@ -54,4 +54,9 @@ public class NewsServiceImpl implements NewsService {
         });
         return result;
     }
+
+    @Override
+    public void addNews(News news){
+        newsRepository.save(news);
+    }
 }
