@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -39,40 +37,22 @@ public class CategoryController {
             model.addAttribute("isAdd",true);
             model.addAttribute("category",new Category());
         }
-        System.out.println("edit");
         return "cate_edit";
     }
 
     @PostMapping("save")
-    @ResponseBody
-    public String save(@RequestParam HashMap<String,Object> map){
-//        if(category == null){
-//            return "fail";
-//        }
-//        System.out.println(category.getCateID());
-//        if(category.getCateID()!=null && category.getCateID()>0){
-//            categoryService.updateCategory(category);
-//
-//        }else {
-//            categoryService.addCategory(category);
-//        }
-        if(map == null || map.size() ==0){
-            return null;
+    public String save(@ModelAttribute Category category){
+        if(category == null){
+            return "fail";
         }
-        Category category = new Category();
-        category.setCateName((String)map.get("cateName"));
-        category.setSort(Integer.parseInt((String)map.get("sort")));
-
-        if(map.get("cateID")!=null && (Long.parseLong(map.get("cateID").toString()))>0){
-            String cateID = map.get("cateID").toString();
-            System.out.println("edit"+map.get("cateID").toString());
-            category.setCateID(Long.parseLong(cateID));
+        System.out.println(category.getCateID());
+        if(category.getCateID()!=null && category.getCateID()>0){
             categoryService.updateCategory(category);
 
         }else {
             categoryService.addCategory(category);
         }
-        return "success";
+        return "redirect:/cate/toList";
     }
 
     @RequestMapping("list")
@@ -82,13 +62,9 @@ public class CategoryController {
         return null;
     }
 
-    @RequestMapping("del")
-    @ResponseBody
-    public String delByID(@RequestParam  HashMap<String,String> map){
-        String cateIDs=map.get("id");
-        Long id = Long.parseLong(cateIDs);
-        System.out.println("cateIDdel:"+id);
-        categoryService.deleteCategory(id);
-        return "success";
+    @RequestMapping("del/{id}")
+    public String delByID(@PathVariable("id")Long cateID){
+        categoryService.deleteCategory(cateID);
+        return "redirect:/cate/toList";
     }
 }
