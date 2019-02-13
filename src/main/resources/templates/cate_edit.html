@@ -89,19 +89,38 @@
                 }
             }
         });
-
         //监听提交
         form.on('submit(add)', function(data){
-            var index = parent.layer.getFrameIndex(window.name);
-            parent.layer.close(index);//关闭当前页
+            // var index = parent.layer.getFrameIndex(window.name);
+            // parent.layer.close(index);//关闭当前页
             $.ajax({
                 url:'/cate/save',
+                cache: false,
+                // async:false,
                 method:'post',
                 data:data.field,
+                beforeSend:function(){
+                  l_index=layer.load(1,{
+                      shade:[0.5,'#DBDBDB']
+                  })  ;
+                },
                 success:function(res){
-                    parent.location.reload();
+                    if(res="success"){
+                        layer.close(l_index);
+                        layer.alert("提交成功",{
+                            icon:6
+                        },function(){
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                            window.parent.location.reload();
+                        })
+                    }else {
+                        layer.alert(res);
+                    }
+                    // parent.location.reload();
                 }
             })
+            return false;//这样才能实现刷新，不知道为什么。
         });
     });
 </script>

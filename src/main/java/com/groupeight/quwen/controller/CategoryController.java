@@ -62,9 +62,10 @@ public class CategoryController {
         Category category = new Category();
         category.setCateName((String)map.get("cateName"));
         category.setSort(Integer.parseInt((String)map.get("sort")));
-        String cateID = map.get("cateID").toString();
-        System.out.println("save or edit"+map.get("cateID").toString());
-        if(map.get("cateID")!=null && (Long.parseLong(cateID))>0){
+
+        if(map.get("cateID")!=null && (Long.parseLong(map.get("cateID").toString()))>0){
+            String cateID = map.get("cateID").toString();
+            System.out.println("edit"+map.get("cateID").toString());
             category.setCateID(Long.parseLong(cateID));
             categoryService.updateCategory(category);
 
