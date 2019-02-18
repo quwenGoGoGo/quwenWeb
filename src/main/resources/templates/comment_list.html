@@ -52,7 +52,6 @@
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
-            <th>评论</th>
             <th>用户</th>
             <th>评论内容</th>
             <th>评论时间</th>
@@ -64,15 +63,16 @@
             <td>
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td th:text="${iterStat.count}">1</td>
             <td th:text="${comments.userID}">小红</td>
             <td th:text="${comments.commentContent}">13000000000</td>
             <td th:text="${comments.commentDate}">2017-01-01 11:11:42</td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('编辑','member-edit.html',600,400)" href="javascript:;">
+              <!--<a title="编辑"  onclick="x_admin_show('编辑','member-edit.html',600,400)" href="javascript:;">-->
+              <a _href="javascript :history.back()" th:href="@{'./edit/'+${comments.commentID}}">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+              <!--<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">-->
+                <a th:href="@{'./del/'+${Cate.cateID}}">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>

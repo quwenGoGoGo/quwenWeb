@@ -22,26 +22,41 @@ public class CommentController {
        return "comment_list";
     }
 
-    @GetMapping("/toAdd")
-    public String toAdd(Model model){
-        model.addAttribute("cmts", new Comment());
-        return "comment_add";
+    @RequestMapping("/edit/{id}")
+    public String edit(Model model,@PathVariable("id") Long id){
+        System.out.println(id);
+
+        if(id > 0){
+            System.out.println(id);
+            model.addAttribute("isAdd", false);
+            model.addAttribute("comment", commentService.getCommentByID(id));
+        }
+        else{
+            model.addAttribute("isAdd", true);
+            model.addAttribute("comment", new Comment());
+        }
+
+        return "comment_edit";
     }
 
-    @PostMapping("/add")
-    public  String add(Model model, @ModelAttribute Comment cmts){
-        commentService.addComment(cmts);
-        List<Comment> lists = commentService.getAllComment();
-        model.addAttribute("cmts", lists);
-        return "comment_list";
+    @PostMapping("/save")
+    public String save(@ModelAttribute Comment comment){
+        if(comment == null)
+            return "fail";
+
+        System.out.println(comment.getCommentID());
+
+        if(comment.getCommentID() != null && comment.getCommentID() > 0)
+            commentService.updateComment(comment);
+        else
+            commentService.addComment(comment);
+
+        return "redirect:/comments/all";
     }
 
-    @RequestMapping("/update/{id}")
-    public String toUpdate(Model model, @PathVariable("id") Long commentID){
-        model.addAttribute("cmts", commentService.getCommentByID(commentID) );
-        return "comment_update";
+    @RequestMapping("/del/{id}")
+    public String delByID(@PathVariable("id") Long commentID) {
+        commentService.deleteComment(commentID);
+        return "redirect:/comments/all";
     }
-
-//    @RequestMapping("/update/{id}")
-//    public String update(Model model, @PathVariable Long commentID, @ModelAttribute Comment cmts){}
 }
