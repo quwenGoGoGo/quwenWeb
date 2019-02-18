@@ -33,7 +33,7 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so" th:action="@{/news/search}">
+        <form class="layui-form layui-col-md12 x-so layui-form-pane" action="/news/search" method="post">
           <input type="text" id="searchByTitle" name="searchByTitle" class="layui-input" placeholder="新闻标题" autocomplete="off">
           <input type="text" id="searchByCate" name="searchByCate"  placeholder="新闻分类" autocomplete="off" class="layui-input">
           <!--<label class="layui-form-label">发布时间-->
@@ -43,13 +43,13 @@
           <!--<a th:href="@{/news/search}" class="layui-btn">-->
              <!--<i class="layui-icon">&#xe615;</i>-->
           <!--</a>-->
-          <input type="submit" class="layui-btn layui-icon" value="">
-          <!--<button class="layui-btn" value="submit" ><i class="layui-icon">&#xe615;</i></button>-->
+          <input type="submit" class="layui-btn layui-icon" value="搜索">
+          <!--<button class="layui-btn" value="submit" lay-submit lay-filter="search" ><i class="layui-icon">&#xe615;</i></button>-->
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" th:onclick="x_admin_show('添加用户','/news/toAdd',600,400)"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn" th:onclick="x_admin_show('添加用户','/news/edit/0',600,400)"><i class="layui-icon"></i>添加</button>
           <span class="x-right" style="line-height:40px">共有数据：88 条</span>
       </xblock>
       <table class="layui-table">
@@ -89,13 +89,13 @@
               <a title="收藏列表" onclick="x_admin_show('修改密码','member-password.html',600,400)" href="javascript:;">
                 <i class="layui-icon">&#xe658;</i>
               </a>
-              <a title="编辑"  onclick="x_admin_show('编辑','news-edit.html',600,400)" href="javascript:;">
+              <a title="编辑"  th:onclick="'javascript:edit('+this+','+${News.getNewsID()}+');'">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-    
               <a title="删除" th:href="@{/news/delete(id=${News.getNewsID()})}">
                 <i class="layui-icon">&#xe640;</i>
               </a>
+
             </td>
           </tr>
         </tbody>
@@ -126,6 +126,42 @@
           elem: '#end' //指定元素
         });
       });
+
+      layui.use(['form','layer'],function () {
+          $ = layui.jquery;
+          var form = layui.form
+              ,layer = layui.layer;
+
+          form.on('submit(search)', function (data) {
+              alert("sousuo ");
+              $.ajax({
+                  url:'/news/search',
+                  cache:false,
+                  type:'post',
+                  data:data.field
+              })
+              return false;
+
+          })
+      })
+
+
+      // 编辑
+      function edit(obj,id){
+          urls='/news/edit/'+id;
+          alert(urls);
+          layer.open({
+              type: 2,
+              area: ['600px', '400px'],
+              fix: false, //不固定
+              maxmin: true,
+              shadeClose: true,
+              shade:0.4,
+              title: '编辑分类',
+              content: urls
+          });
+      }
+
 
        /*用户-停用*/
       function member_stop(obj,id){

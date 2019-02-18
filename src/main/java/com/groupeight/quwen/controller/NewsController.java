@@ -2,22 +2,17 @@ package com.groupeight.quwen.controller;
 
 import com.groupeight.quwen.entity.Category;
 import com.groupeight.quwen.entity.News;
-import com.groupeight.quwen.entity.NewsForm;
 import com.groupeight.quwen.service.CategoryService;
 import com.groupeight.quwen.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.thymeleaf.util.DateUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -41,21 +36,29 @@ public class NewsController {
         return "news-list";
     }
 
-    @GetMapping("toAdd")
-    public String toAdd(Model model){
+    @RequestMapping("edit/{id}")
+    public String edit(Model model,@PathVariable("id")Long id){
+
+        if(id>0){
+            model.addAttribute("isAdd",false);
+            model.addAttribute("news",newsService.getNewsByID(id));
+        }else{
+            model.addAttribute("isAdd",true);
+            model.addAttribute("news",new News());
+        }
         List<Category> categories = categoryService.getAllCategory();
         model.addAttribute("categoryList",categories);
-        model.addAttribute("news",new News());
-        return "news-add";
+        return "news-edit";
     }
 
-    @PostMapping("add")
+    @RequestMapping("add")
+    @ResponseBody
     public String addNews(@RequestParam(value = "title") String title,
             @RequestParam(value = "cateName")String cateName,
             @RequestParam(value = "cover")MultipartFile file,
             @RequestParam(value = "content")String content,
             @RequestParam(value = "author")String author,
-            @RequestParam(value = "status")Integer status,
+            @RequestParam(value = "switch") Integer status,
             Model model) throws Exception{
         News news = new News();
         news.setTitle(title);
@@ -91,7 +94,7 @@ public class NewsController {
             }
         }
         newsService.addNews(news);
-        return "redirect:/news/toList";
+        return "success";
     }
 
     @RequestMapping("delete")
@@ -102,12 +105,6 @@ public class NewsController {
 
     @RequestMapping("search")
     public String searchForNews(@RequestParam("searchByTitle")String stitle, @RequestParam("searchByCate")String scategory, Model model){
-        System.out.println("搜索");
-//        String stitle = httpServletRequest.getParameter("searchByTitle");
-//        String scategory = httpServletRequest.getParameter("searchByCate");
-        System.out.println(stitle);
-        System.out.println(scategory);
-//        String stime = httpServletRequest.getParameter("searchByTime");
         Category category = categoryService.findByCateName(scategory);
         News newsModel = new News();
         newsModel.setTitle(stitle);

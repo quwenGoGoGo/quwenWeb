@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,12 +42,15 @@ public class NewsServiceImpl implements NewsService {
             public Predicate toPredicate(Root<News> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> list = new ArrayList<Predicate>();
 
+                SimpleDateFormat sdfmat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
                 if(!StringUtils.isEmpty(newsModel.getTitle())){
                     list.add(criteriaBuilder.like(root.get("title").as(String.class),"%" + newsModel.getTitle() + "%"));
                 }
                 if(newsModel.getCategory()!=null&&newsModel.getCategory().getCateID()!=null){
                     list.add(criteriaBuilder.equal(root.get("category").as(Category.class), newsModel.getCategory()));
                 }
+
 
                 Predicate[] p = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(p));
@@ -58,5 +62,10 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public void addNews(News news){
         newsRepository.save(news);
+    }
+
+    @Override
+    public News getNewsByID(Long newsID){
+        return newsRepository.findById(newsID).get();
     }
 }
